@@ -15,7 +15,7 @@ const AddEntry = ({ persons, setPersons, setMessage }) => {
 
   const handleDuplicateUpdate = () => {
     const formatName = newName.trim();
-    const message = `${formatName} is already added to the phonebook, replace the old number with a new One?`;
+    const message = `${formatName} is already added to the phonebook, replace the old number with a new one?`;
     if (window.confirm(message)) {
       const number = persons.find(person => person.name === newName);
       const changedNumber = { ...number, number: newPhoneNumber };
