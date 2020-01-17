@@ -23,12 +23,12 @@ const AddEntry = ({ persons, setPersons, setMessage }) => {
       numService
         .update(changedNumber.id, changedNumber)
         .then(returnedNumber => {
-          ({
+          setMessage({
             message: `Changed Number for ${formatName}`,
             type: true
           });
           setTimeout(() => {
-            null;
+            setMessage(null);
           }, 5000);
           setPersons(
             persons.map(person =>
@@ -37,12 +37,12 @@ const AddEntry = ({ persons, setPersons, setMessage }) => {
           );
         })
         .catch(error => {
-          ({
+          setMessage({
             message: `Information of ${formatName} has already been removed from the server `,
             type: false
           });
           setTimeout(() => {
-            null;
+            setMessage(null);
           }, 5000);
           setPersons(persons.filter(person => person.id !== number.id));
         });
@@ -77,12 +77,12 @@ const AddEntry = ({ persons, setPersons, setMessage }) => {
       };
 
       numService.create(nameObj).then(data => {
-        ({
+        setMessage({
           message: `Added ${data.name}`,
           type: true
         });
         setTimeout(() => {
-          null;
+          setMessage(null);
         }, 5000);
         setPersons(persons.concat(data));
         setNewName("");
