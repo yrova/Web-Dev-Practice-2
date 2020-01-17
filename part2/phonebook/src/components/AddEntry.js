@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import numService from "../services/phonenumbers";
 
-const AddEntry = ({ persons, setPersons }) => {
+const AddEntry = ({ persons, setPersons, setMessage }) => {
   const [newName, setNewName] = useState("");
   const [newPhoneNumber, setNewPhoneNumber] = useState("");
 
@@ -13,7 +13,7 @@ const AddEntry = ({ persons, setPersons }) => {
     setNewPhoneNumber(event.target.value);
   };
 
-  const handleDuplicate = () => {
+  const handleDuplicateUpdate = () => {
     const formatName = newName.trim();
     const message = `${formatName} is already added to the phonebook, replace the old number with a new One?`;
     if (window.confirm(message)) {
@@ -23,6 +23,13 @@ const AddEntry = ({ persons, setPersons }) => {
       numService
         .update(changedNumber.id, changedNumber)
         .then(returnedNumber => {
+          ({
+            message: `Changed Number for ${formatName}`,
+            type: true
+          });
+          setTimeout(() => {
+            null;
+          }, 5000);
           setPersons(
             persons.map(person =>
               person.id !== changedNumber.id ? person : returnedNumber
@@ -30,9 +37,13 @@ const AddEntry = ({ persons, setPersons }) => {
           );
         })
         .catch(error => {
-          alert(
-            `The person ${formatName} was already deleted from the server `
-          );
+          ({
+            message: `Information of ${formatName} has already been removed from the server `,
+            type: false
+          });
+          setTimeout(() => {
+            null;
+          }, 5000);
           setPersons(persons.filter(person => person.id !== number.id));
         });
     }
@@ -48,7 +59,7 @@ const AddEntry = ({ persons, setPersons }) => {
   const addUserInfo = event => {
     event.preventDefault();
     if (hasDuplicate()) {
-      handleDuplicate();
+      handleDuplicateUpdate();
     } else {
       //Retrieves biggest id value from the json server,otherwise return 0
       const generateId = () => {
@@ -62,10 +73,17 @@ const AddEntry = ({ persons, setPersons }) => {
       const nameObj = {
         name: newName,
         number: newPhoneNumber,
-        id: generateId() + 1
+        id: generateId() + 1 //increment biggest value by one for a unique id
       };
 
       numService.create(nameObj).then(data => {
+        ({
+          message: `Added ${data.name}`,
+          type: true
+        });
+        setTimeout(() => {
+          null;
+        }, 5000);
         setPersons(persons.concat(data));
         setNewName("");
         setNewPhoneNumber("");

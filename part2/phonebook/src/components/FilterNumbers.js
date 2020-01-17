@@ -6,7 +6,6 @@ const FilterNumbers = ({ setNewFilter }) => {
   };
   return (
     <div>
-      <h2>PhoneBook</h2>
       <form>
         <div>
           filter shown with
