@@ -8,6 +8,7 @@ const cors = require("cors");
 //Adds data from Post if applicable
 morgan.token("data", (res, req) => JSON.stringify(res.body));
 
+app.use(express.static("build"));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(
