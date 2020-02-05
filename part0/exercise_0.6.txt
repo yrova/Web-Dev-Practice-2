@@ -1,0 +1,8 @@
+browser->server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+server-->browser: 201 Created
+
+note over browser:
+browser requests to POST new_note to the server
+browser sends JSON-data containing both the note's content and timestamp
+Content-Type header of the request allows the server to parse the data immediately without a refresh being needed
+end note
